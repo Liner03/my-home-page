@@ -17,6 +17,7 @@ export interface AboutData {
   avatarUrl: string;
   title: string;
   description: string;
+  githubUsername: string;
   skills: string[];
 }
 

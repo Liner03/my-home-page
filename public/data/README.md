@@ -59,6 +59,7 @@
   "avatarUrl": "头像图片URL",
   "title": "您的职位/头衔",
   "description": "个人简介描述",
+  "githubUsername": "您的GitHub用户名",
   "skills": [
     "技能1",
     "技能2",
@@ -66,6 +67,8 @@
   ]
 }
 ```
+
+**注意：** `githubUsername` 将用于显示您的 GitHub 贡献日历图表，无需配置 token。
 
 #### 3. projects (项目列表)
 
