@@ -26,7 +26,7 @@
               <div class="inline-grid grid-flow-col gap-[2px]" style="grid-template-rows: repeat(7, 10px); grid-auto-columns: 10px;">
                 @for (contribution of githubContributions(); track contribution.date) {
                   <div
-                    [style.background-color]="getContributionColor(contribution.level)"
+                    [style.background-color]="getContributionColor(contribution.intensity)"
                     class="w-[10px] h-[10px] rounded-[2px] border border-white/5 transition-all duration-200 hover:border-indigo-400/50 hover:scale-110 cursor-pointer"
                     [title]="contribution.count + ' contributions on ' + contribution.date">
                   </div>

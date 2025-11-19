@@ -6,7 +6,7 @@ import { DataService, type AboutData } from '../../data.service';
 interface GitHubContribution {
   date: string;
   count: number;
-  level: number;
+  intensity: string;
 }
 
 interface GitHubCalendarData {
@@ -42,24 +42,18 @@ export class AboutComponent {
   }
 
   async loadGitHubContributions(username: string) {
-    console.log('Loading GitHub contributions for:', username);
     this.isLoadingGitHub.set(true);
     this.errorMessage.set('');
 
     try {
       const url = `https://gh-calendar.rschristian.dev/user/${username}`;
-      console.log('Fetching from:', url);
-
       const response = await fetch(url);
-      console.log('Response status:', response.status);
 
       if (!response.ok) {
         throw new Error(`HTTP ${response.status}: Failed to fetch GitHub contributions`);
       }
 
       const data: GitHubCalendarData = await response.json();
-      console.log('Received data:', data);
-      console.log('Contributions count:', data.contributions?.length);
 
       // Flatten the nested array structure (weeks -> days)
       const flatContributions: GitHubContribution[] = [];
@@ -72,14 +66,10 @@ export class AboutComponent {
           }
         });
       }
-      console.log('Flattened contributions:', flatContributions.length);
-      console.log('Sample contribution object:', flatContributions[0]);
-      console.log('Sample contribution fields:', flatContributions[100]);
       this.githubContributions.set(flatContributions);
 
       // Calculate total - it's already a number in this API
       const total = typeof data.total === 'number' ? data.total : 0;
-      console.log('Total contributions this year:', total);
       this.totalContributions.set(total);
     } catch (error) {
       console.error('Error loading GitHub contributions:', error);
@@ -91,7 +81,8 @@ export class AboutComponent {
     }
   }
 
-  getContributionColor(level: number): string {
+  getContributionColor(intensity: string | number): string {
+    const level = typeof intensity === 'string' ? parseInt(intensity, 10) : intensity;
     const colors = [
       'rgba(255, 255, 255, 0.05)', // level 0 - no contributions
       'rgba(139, 92, 246, 0.3)',   // level 1 - low
