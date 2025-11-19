@@ -1,0 +1,42 @@
+<div class="glass-card w-full h-full rounded-2xl p-8 flex flex-col md:flex-row gap-8 overflow-hidden">
+  <!-- Left Panel: AI-annotated text -->
+  <div class="md:w-1/2 flex flex-col">
+    <h2 class="text-2xl font-bold text-glow mb-4">AI Thought Processor</h2>
+    <div class="glass-card rounded-lg p-6 border-white/10 flex-grow overflow-y-auto hide-scrollbar scroll-mask">
+      <p class="text-gray-200 leading-relaxed">
+        Personal Brainstorming Session: The portfolio's core aesthetic should be 
+        <mark class="bg-yellow-500/30 text-yellow-200">"functional beauty,"</mark>
+        where every animation serves a purpose. 
+        <span class="bg-blue-500/20 px-1 rounded">The timeline entry needs a more dramatic effect</span>, maybe a particle burst. 
+        Must <u class="decoration-sky-400 decoration-2">research state management in zoneless Angular</u>. 
+        Also, a thought on "Project Nebula": it could be structured as a 
+        <span class="bg-purple-500/20 px-1 rounded">"digital garden," a living knowledge base</span>. 
+        Need to store the <span class="bg-red-500/20 px-1 rounded blur-[2px] select-none">API key for the weather station securely</span>.
+      </p>
+    </div>
+  </div>
+
+  <!-- Right Panel: Categorized Notes -->
+  <div class="md:w-1/2 flex flex-col">
+    <h2 class="text-2xl font-bold text-glow mb-4">Categorized Entries</h2>
+    <div class="flex-shrink-0 flex flex-wrap gap-2 mb-4">
+      <button (click)="setCategory('inspiration')" class="px-3 py-1 text-sm rounded-full transition-colors" [class.bg-purple-500]="activeCategory() === 'inspiration'" [class.bg-white/10]="activeCategory() !== 'inspiration'">Inspirations</button>
+      <button (click)="setCategory('todo')" class="px-3 py-1 text-sm rounded-full transition-colors" [class.bg-sky-500]="activeCategory() === 'todo'" [class.bg-white/10]="activeCategory() !== 'todo'">To-Do</button>
+      <button (click)="setCategory('learning')" class="px-3 py-1 text-sm rounded-full transition-colors" [class.bg-yellow-500]="activeCategory() === 'learning'" [class.bg-white/10]="activeCategory() !== 'learning'">Learning</button>
+      <button (click)="setCategory('project')" class="px-3 py-1 text-sm rounded-full transition-colors" [class.bg-blue-500]="activeCategory() === 'project'" [class.bg-white/10]="activeCategory() !== 'project'">Project Notes</button>
+      <button (click)="setCategory('secure')" class="px-3 py-1 text-sm rounded-full transition-colors" [class.bg-red-500]="activeCategory() === 'secure'" [class.bg-white/10]="activeCategory() !== 'secure'">Secure</button>
+    </div>
+    <div class="glass-card rounded-lg p-4 border-white/10 flex-grow overflow-y-auto hide-scrollbar scroll-mask">
+      <div class="space-y-3">
+        @for (note of filteredNotes; track note.id) {
+          <div class="bg-white/5 p-3 rounded-md">
+            <p class="text-gray-200" [class.blur-sm]="note.category === 'secure'">{{ note.content }}</p>
+            <p class="text-xs text-gray-500 mt-1 text-right">{{ note.timestamp }}</p>
+          </div>
+        } @empty {
+          <div class="text-center text-gray-500 py-8">No entries in this category.</div>
+        }
+      </div>
+    </div>
+  </div>
+</div>

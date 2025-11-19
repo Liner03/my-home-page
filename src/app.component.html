@@ -1,0 +1,60 @@
+<!-- Background Element -->
+<div class="fixed inset-0 w-full h-full -z-10 transition-all duration-700 blur-sm"
+     style="background-image: linear-gradient(rgba(2, 6, 23, 0.6), rgba(2, 6, 23, 0.6)), url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=3600'); background-size: cover; background-position: center; background-attachment: fixed;">
+</div>
+
+@if (showMarquee()) {
+  <div class="border-marquee"></div>
+}
+
+<!-- This MAIN section is for the home screen content, it's transparent to show the background -->
+<main class="w-full h-screen flex flex-col items-center justify-center p-4 sm:p-8 relative">
+  
+  <div class="absolute inset-0 w-full h-full bg-black/30 z-10 pointer-events-none transition-opacity duration-500"
+       [class.opacity-100]="activeView() !== 'home'"
+       [class.opacity-0]="activeView() === 'home'">
+  </div>
+  
+  <div class="w-full h-full flex items-center justify-center transition-opacity duration-500"
+       [class.opacity-0]="activeView() !== 'home'"
+       [class.opacity-100]="activeView() === 'home'">
+    <app-home />
+  </div>
+</main>
+
+<!-- This section is for the active module, rendered ON TOP of the blurred background -->
+@if (renderedView() !== 'home') {
+  <div class="absolute inset-0 flex items-center justify-center p-4 sm:p-8 z-20"
+       [class.animate-fade-in]="!isClosing() && animationDirection() === 'none'"
+       [class.animate-fade-out]="isClosing() && animationDirection() === 'none'"
+       [class.animate-in-right]="!isClosing() && animationDirection() === 'right'"
+       [class.animate-out-left]="isClosing() && animationDirection() === 'right'"
+       [class.animate-in-left]="!isClosing() && animationDirection() === 'left'"
+       [class.animate-out-right]="isClosing() && animationDirection() === 'left'">
+    <div class="w-full max-w-5xl h-[85vh] max-h-[900px]">
+      @switch (renderedView()) {
+        @case ('about') { <app-about /> }
+        @case ('projects') { <app-projects /> }
+        @case ('notes') { <app-notes /> }
+      }
+    </div>
+  </div>
+}
+
+<nav class="fixed bottom-4 left-1/2 -translate-x-1/2 z-30">
+  <div class="relative flex items-center justify-center gap-2 sm:gap-4 glass-card rounded-full p-2 taskbar-glow">
+    @for (item of navItems; track item.id) {
+      <button (click)="setView(item.id)"
+              class="relative z-10 w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 ease-out transform hover:scale-110"
+              [class.text-white]="activeView() === item.id"
+              [class.hover:bg-white/15]="activeView() !== item.id"
+              [class.text-gray-400]="activeView() !== item.id"
+              [class.bg-white/20]="activeView() === item.id"
+              [class.neon-glow]="(item.id === 'projects' && activeView() === 'home') || activeView() === item.id">
+        <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" [attr.d]="item.icon" />
+        </svg>
+      </button>
+    }
+  </div>
+</nav>
