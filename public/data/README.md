@@ -58,7 +58,6 @@
   "name": "您的名字",
   "avatarUrl": "头像图片URL",
   "title": "您的职位/头衔",
-  "description": "个人简介描述",
   "githubUsername": "您的GitHub用户名",
   "skills": [
     "技能1",
@@ -68,7 +67,10 @@
 }
 ```
 
-**注意：** `githubUsername` 将用于显示您的 GitHub 贡献日历图表，无需配置 token。
+**注意：**
+- `githubUsername` 将用于动态获取并显示您的 GitHub 贡献热力图
+- 贡献数据从 GitHub API 实时加载，无需配置 token
+- 热力图会自动显示过去一年的代码提交活跃度
 
 #### 3. projects (项目列表)
 

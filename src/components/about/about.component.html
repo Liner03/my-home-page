@@ -8,12 +8,49 @@
       <p class="text-xl text-indigo-300 font-medium">{{ data.title }}</p>
 
       <!-- GitHub Contribution Calendar -->
-      <div class="w-full max-w-2xl">
-        <img
-          [src]="'https://gh-calendar.rschristian.dev/user/' + data.githubUsername"
-          [alt]="'GitHub contributions for ' + data.githubUsername"
-          class="w-full rounded-lg border border-white/10 bg-white/5 p-2"
-          loading="lazy">
+      <div class="w-full max-w-3xl">
+        <div class="glass-card rounded-lg border border-white/10 bg-white/5 p-4">
+          <div class="flex items-center justify-between mb-3">
+            <h3 class="text-sm font-semibold text-gray-300">GitHub Contributions</h3>
+            @if (totalContributions() > 0) {
+              <span class="text-xs text-indigo-400">{{ totalContributions() }} contributions this year</span>
+            }
+          </div>
+
+          @if (isLoadingGitHub()) {
+            <div class="flex items-center justify-center h-32">
+              <div class="text-gray-400 text-sm">Loading contributions...</div>
+            </div>
+          } @else if (githubContributions().length > 0) {
+            <div class="overflow-x-auto hide-scrollbar">
+              <div class="inline-grid grid-flow-col gap-[3px]" style="grid-template-rows: repeat(7, 1fr);">
+                @for (contribution of githubContributions(); track contribution.date) {
+                  <div
+                    [style.background-color]="getContributionColor(contribution.level)"
+                    class="w-[10px] h-[10px] rounded-sm border border-white/5 transition-all duration-200 hover:border-indigo-400/50 hover:scale-125"
+                    [title]="contribution.count + ' contributions on ' + contribution.date">
+                  </div>
+                }
+              </div>
+            </div>
+            <div class="flex items-center gap-2 mt-3 justify-end">
+              <span class="text-xs text-gray-500">Less</span>
+              <div class="flex gap-1">
+                @for (level of [0, 1, 2, 3, 4]; track level) {
+                  <div
+                    [style.background-color]="getContributionColor(level)"
+                    class="w-[10px] h-[10px] rounded-sm border border-white/5">
+                  </div>
+                }
+              </div>
+              <span class="text-xs text-gray-500">More</span>
+            </div>
+          } @else {
+            <div class="flex items-center justify-center h-32">
+              <div class="text-gray-400 text-sm">No contribution data available</div>
+            </div>
+          }
+        </div>
       </div>
 
       <div class="flex flex-wrap gap-2 justify-center sm:justify-start">
