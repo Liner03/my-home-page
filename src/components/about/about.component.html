@@ -22,12 +22,12 @@
               <div class="text-gray-400 text-sm">Loading contributions...</div>
             </div>
           } @else if (githubContributions().length > 0) {
-            <div class="overflow-x-auto hide-scrollbar">
-              <div class="inline-grid grid-flow-col gap-[3px]" style="grid-template-rows: repeat(7, 1fr);">
+            <div class="overflow-x-auto hide-scrollbar pb-2">
+              <div class="inline-grid grid-flow-col gap-[2px]" style="grid-template-rows: repeat(7, minmax(10px, 10px)); grid-auto-columns: 10px;">
                 @for (contribution of githubContributions(); track contribution.date) {
                   <div
                     [style.background-color]="getContributionColor(contribution.level)"
-                    class="w-[10px] h-[10px] rounded-sm border border-white/5 transition-all duration-200 hover:border-indigo-400/50 hover:scale-125"
+                    class="rounded-[2px] border border-white/5 transition-all duration-200 hover:border-indigo-400/50 hover:scale-110 cursor-pointer"
                     [title]="contribution.count + ' contributions on ' + contribution.date">
                   </div>
                 }
@@ -39,7 +39,7 @@
                 @for (level of [0, 1, 2, 3, 4]; track level) {
                   <div
                     [style.background-color]="getContributionColor(level)"
-                    class="w-[10px] h-[10px] rounded-sm border border-white/5">
+                    class="w-[10px] h-[10px] rounded-[2px] border border-white/5">
                   </div>
                 }
               </div>
@@ -47,7 +47,13 @@
             </div>
           } @else {
             <div class="flex items-center justify-center h-32">
-              <div class="text-gray-400 text-sm">No contribution data available</div>
+              <div class="text-gray-400 text-sm">
+                @if (errorMessage()) {
+                  {{ errorMessage() }}
+                } @else {
+                  No contribution data available
+                }
+              </div>
             </div>
           }
         </div>

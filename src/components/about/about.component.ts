@@ -27,6 +27,7 @@ export class AboutComponent {
   githubContributions = signal<GitHubContribution[]>([]);
   totalContributions = signal<number>(0);
   isLoadingGitHub = signal<boolean>(false);
+  errorMessage = signal<string>('');
 
   constructor(private dataService: DataService) {
     effect(() => {
@@ -41,20 +42,36 @@ export class AboutComponent {
   }
 
   async loadGitHubContributions(username: string) {
+    console.log('Loading GitHub contributions for:', username);
     this.isLoadingGitHub.set(true);
+    this.errorMessage.set('');
+
     try {
-      const response = await fetch(`https://gh-calendar.rschristian.dev/user/${username}`);
+      const url = `https://gh-calendar.rschristian.dev/user/${username}`;
+      console.log('Fetching from:', url);
+
+      const response = await fetch(url);
+      console.log('Response status:', response.status);
+
       if (!response.ok) {
-        throw new Error('Failed to fetch GitHub contributions');
+        throw new Error(`HTTP ${response.status}: Failed to fetch GitHub contributions`);
       }
+
       const data: GitHubCalendarData = await response.json();
+      console.log('Received data:', data);
+      console.log('Contributions count:', data.contributions?.length);
+
       this.githubContributions.set(data.contributions || []);
 
       // Calculate total contributions for current year
       const currentYear = new Date().getFullYear().toString();
-      this.totalContributions.set(data.total?.[currentYear] || 0);
+      const total = data.total?.[currentYear] || 0;
+      console.log('Total contributions this year:', total);
+      this.totalContributions.set(total);
     } catch (error) {
       console.error('Error loading GitHub contributions:', error);
+      const errorMsg = error instanceof Error ? error.message : 'Failed to load contributions';
+      this.errorMessage.set(errorMsg);
       this.githubContributions.set([]);
     } finally {
       this.isLoadingGitHub.set(false);
