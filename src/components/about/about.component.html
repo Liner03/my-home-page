@@ -1,19 +1,21 @@
-<div class="glass-card w-full h-full rounded-2xl p-8 flex flex-col sm:flex-row items-center justify-center gap-8 overflow-y-auto hide-scrollbar">
-  <div class="flex-shrink-0">
-    <img src="https://picsum.photos/seed/ai-os/192" alt="Creator Avatar" class="w-48 h-48 rounded-full border-2 border-white/20 shadow-lg">
-  </div>
-  <div class="flex flex-col gap-4 text-center sm:text-left">
-    <h2 class="text-4xl font-bold text-glow">Creator Name</h2>
-    <p class="text-xl text-indigo-300 font-medium">Full-Stack Developer / Interaction Designer / AI Enthusiast</p>
-    <p class="text-gray-300 max-w-lg">
-      Passionate about crafting beautiful and intelligent digital experiences. I thrive at the intersection of robust engineering and thoughtful design, with a deep interest in leveraging AI to build smarter, more intuitive applications.
-    </p>
-    <div class="flex flex-wrap gap-2 justify-center sm:justify-start">
-      @for (tag of tags; track tag) {
-        <span class="px-3 py-1 bg-white/10 border border-white/20 rounded-full text-sm font-medium text-gray-200 transition-all duration-300 hover:bg-white/20 hover:scale-105 hover:shadow-lg hover:shadow-purple-500/20">
-          {{ tag }}
-        </span>
-      }
+@if (aboutData(); as data) {
+  <div class="glass-card w-full h-full rounded-2xl p-8 flex flex-col sm:flex-row items-center justify-center gap-8 overflow-y-auto hide-scrollbar">
+    <div class="flex-shrink-0">
+      <img [src]="data.avatarUrl" alt="Creator Avatar" class="w-48 h-48 rounded-full border-2 border-white/20 shadow-lg">
+    </div>
+    <div class="flex flex-col gap-4 text-center sm:text-left">
+      <h2 class="text-4xl font-bold text-glow">{{ data.name }}</h2>
+      <p class="text-xl text-indigo-300 font-medium">{{ data.title }}</p>
+      <p class="text-gray-300 max-w-lg">
+        {{ data.description }}
+      </p>
+      <div class="flex flex-wrap gap-2 justify-center sm:justify-start">
+        @for (tag of data.skills; track tag) {
+          <span class="px-3 py-1 bg-white/10 border border-white/20 rounded-full text-sm font-medium text-gray-200 transition-all duration-300 hover:bg-white/20 hover:scale-105 hover:shadow-lg hover:shadow-purple-500/20">
+            {{ tag }}
+          </span>
+        }
+      </div>
     </div>
   </div>
-</div>
+}

@@ -28,7 +28,7 @@
     </div>
     <div class="glass-card rounded-lg p-4 border-white/10 flex-grow overflow-y-auto hide-scrollbar scroll-mask">
       <div class="space-y-3">
-        @for (note of filteredNotes; track note.id) {
+        @for (note of filteredNotes(); track note.id) {
           <div class="bg-white/5 p-3 rounded-md">
             <p class="text-gray-200" [class.blur-sm]="note.category === 'secure'">{{ note.content }}</p>
             <p class="text-xs text-gray-500 mt-1 text-right">{{ note.timestamp }}</p>

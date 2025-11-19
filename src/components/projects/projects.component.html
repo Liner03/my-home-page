@@ -1,7 +1,7 @@
 <div class="glass-card w-full h-full rounded-2xl p-8 flex flex-col overflow-hidden relative">
   <h2 class="text-3xl font-bold text-glow text-center mb-8 flex-shrink-0">Project Showcase</h2>
   <div class="flex-grow overflow-y-auto pr-2 grid grid-cols-1 md:grid-cols-2 gap-6 hide-scrollbar scroll-mask">
-    @for (project of projects; track project.title) {
+    @for (project of projects(); track project.title) {
       <div (click)="selectProject(project)" class="glass-card rounded-lg p-6 border-white/10 flex flex-col justify-between cursor-pointer transition-all duration-300 hover:border-indigo-400/50 hover:scale-[1.02] hover:shadow-2xl hover:shadow-indigo-500/20">
         <div>
           <h3 class="text-xl font-semibold text-indigo-300 mb-2">{{ project.title }}</h3>

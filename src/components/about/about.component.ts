@@ -1,6 +1,7 @@
 
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, signal, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { DataService, type AboutData } from '../../services/data.service';
 
 @Component({
   selector: 'app-about',
@@ -9,12 +10,14 @@ import { CommonModule } from '@angular/common';
   imports: [CommonModule]
 })
 export class AboutComponent {
-  tags = [
-    'Full-Stack Development',
-    'Interactive Design',
-    'AI Integration',
-    'Automation Workflows',
-    'UI/UX Aesthetics',
-    'Cloud Architecture'
-  ];
+  aboutData = signal<AboutData | null>(null);
+
+  constructor(private dataService: DataService) {
+    effect(() => {
+      const data = this.dataService.getAboutData();
+      if (data) {
+        this.aboutData.set(data);
+      }
+    });
+  }
 }

@@ -1,5 +1,6 @@
 
-import { Component, ChangeDetectionStrategy, signal } from '@angular/core';
+import { Component, ChangeDetectionStrategy, signal, effect } from '@angular/core';
+import { DataService, type HomeData } from '../../services/data.service';
 
 @Component({
   selector: 'app-home',
@@ -7,5 +8,14 @@ import { Component, ChangeDetectionStrategy, signal } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomeComponent {
-  name = signal('Creator Name');
+  homeData = signal<HomeData | null>(null);
+
+  constructor(private dataService: DataService) {
+    effect(() => {
+      const data = this.dataService.getHomeData();
+      if (data) {
+        this.homeData.set(data);
+      }
+    });
+  }
 }
