@@ -73,6 +73,8 @@ export class AboutComponent {
         });
       }
       console.log('Flattened contributions:', flatContributions.length);
+      console.log('Sample contribution object:', flatContributions[0]);
+      console.log('Sample contribution fields:', flatContributions[100]);
       this.githubContributions.set(flatContributions);
 
       // Calculate total - it's already a number in this API
