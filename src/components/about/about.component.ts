@@ -61,11 +61,22 @@ export class AboutComponent {
       console.log('Received data:', data);
       console.log('Contributions count:', data.contributions?.length);
 
-      this.githubContributions.set(data.contributions || []);
+      // Flatten the nested array structure (weeks -> days)
+      const flatContributions: GitHubContribution[] = [];
+      if (Array.isArray(data.contributions)) {
+        data.contributions.forEach((week: any) => {
+          if (Array.isArray(week)) {
+            week.forEach((day: any) => {
+              flatContributions.push(day);
+            });
+          }
+        });
+      }
+      console.log('Flattened contributions:', flatContributions.length);
+      this.githubContributions.set(flatContributions);
 
-      // Calculate total contributions for current year
-      const currentYear = new Date().getFullYear().toString();
-      const total = data.total?.[currentYear] || 0;
+      // Calculate total - it's already a number in this API
+      const total = typeof data.total === 'number' ? data.total : 0;
       console.log('Total contributions this year:', total);
       this.totalContributions.set(total);
     } catch (error) {
