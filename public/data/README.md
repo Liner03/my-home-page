@@ -58,6 +58,7 @@
   "name": "您的名字",
   "avatarUrl": "头像图片URL",
   "title": "您的职位/头衔",
+  "description": "您的个人简介描述",
   "githubUsername": "您的GitHub用户名",
   "skills": [
     "技能1",
