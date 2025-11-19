@@ -21,18 +21,12 @@ export interface AboutData {
   skills: string[];
 }
 
-export interface ProjectDetails {
-  role: string;
-  problem: string;
-  solution: string;
-  outcome: string;
-}
-
-export interface Project {
+export interface Website {
   title: string;
   description: string;
-  tech: string[];
-  details: ProjectDetails;
+  url: string;
+  icon?: string;
+  tags?: string[];
 }
 
 export type NoteCategory = 'todo' | 'learning' | 'inspiration' | 'project' | 'secure';
@@ -47,7 +41,7 @@ export interface Note {
 export interface PortfolioData {
   home: HomeData;
   about: AboutData;
-  projects: Project[];
+  websites: Website[];
   notes: Note[];
 }
 
@@ -75,8 +69,8 @@ export class DataService {
     return this.data()?.about || null;
   }
 
-  getProjects(): Project[] {
-    return this.data()?.projects || [];
+  getWebsites(): Website[] {
+    return this.data()?.websites || [];
   }
 
   getNotes(): Note[] {
