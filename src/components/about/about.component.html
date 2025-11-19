@@ -3,7 +3,7 @@
     <div class="flex-shrink-0 flex flex-col items-center gap-4">
       <img [src]="data.avatarUrl" alt="Creator Avatar" class="w-48 h-48 rounded-full border-2 border-white/20 shadow-lg">
 
-      <div class="flex flex-wrap gap-2 justify-center max-w-xs">
+      <div class="flex flex-wrap gap-2 justify-center max-w-sm px-2">
         @for (tag of data.skills; track tag) {
           <span class="px-3 py-1 bg-white/10 border border-white/20 rounded-full text-sm font-medium text-gray-200 transition-all duration-300 hover:bg-white/20 hover:scale-105 hover:shadow-lg hover:shadow-purple-500/20">
             {{ tag }}
@@ -12,7 +12,7 @@
       </div>
     </div>
 
-    <div class="flex flex-col gap-4 text-center sm:text-left">
+    <div class="flex flex-col gap-4 text-center sm:text-left px-4 sm:px-6">
       <h2 class="text-4xl font-bold text-glow">{{ data.name }}</h2>
       <p class="text-xl text-indigo-300 font-medium">{{ data.title }}</p>
 
