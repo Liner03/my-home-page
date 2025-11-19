@@ -14,7 +14,7 @@ dist-ssr
 .angular
 
 # User data (use portfolio-data.example.json as template)
-src/data/portfolio-data.json
+public/data/portfolio-data.json
 
 # Editor directories and files
 .vscode/*

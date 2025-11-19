@@ -1,7 +1,7 @@
 
 import { Component, ChangeDetectionStrategy, signal, effect, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DataService, type NoteCategory, type Note } from '../../services/data.service';
+import { DataService, type NoteCategory, type Note } from '../../data.service';
 
 @Component({
   selector: 'app-notes',

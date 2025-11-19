@@ -1,7 +1,7 @@
 
 import { Component, ChangeDetectionStrategy, signal, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DataService, type Project } from '../../services/data.service';
+import { DataService, type Project } from '../../data.service';
 
 @Component({
   selector: 'app-projects',

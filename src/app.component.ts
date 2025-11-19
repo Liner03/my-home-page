@@ -4,7 +4,7 @@ import { HomeComponent } from './components/home/home.component';
 import { AboutComponent } from './components/about/about.component';
 import { ProjectsComponent } from './components/projects/projects.component';
 import { NotesComponent } from './components/notes/notes.component';
-import { DataService } from './services/data.service';
+import { DataService } from './data.service';
 
 export type View = 'home' | 'about' | 'projects' | 'notes';
 

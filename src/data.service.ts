@@ -58,7 +58,7 @@ export class DataService {
 
   async loadData(): Promise<void> {
     try {
-      const response = await fetch('/src/data/portfolio-data.json');
+      const response = await fetch('/data/portfolio-data.json');
       const jsonData = await response.json();
       this.data.set(jsonData);
     } catch (error) {

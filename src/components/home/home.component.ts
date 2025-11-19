@@ -1,6 +1,6 @@
 
 import { Component, ChangeDetectionStrategy, signal, effect } from '@angular/core';
-import { DataService, type HomeData } from '../../services/data.service';
+import { DataService, type HomeData } from '../../data.service';
 
 @Component({
   selector: 'app-home',

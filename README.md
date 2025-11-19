@@ -37,9 +37,9 @@
 
 3. 配置你的数据：
    ```bash
-   cp src/data/portfolio-data.example.json src/data/portfolio-data.json
+   cp src/data/portfolio-data.example.json public/data/portfolio-data.json
    ```
-   然后编辑 `src/data/portfolio-data.json` 文件，填入你的个人信息。
+   然后编辑 `public/data/portfolio-data.json` 文件，填入你的个人信息。
 
 4. 启动开发服务器：
    ```bash
@@ -52,7 +52,7 @@
 
 ### 快速配置
 
-所有内容都可以通过编辑 `src/data/portfolio-data.json` 来自定义：
+所有内容都可以通过编辑 `public/data/portfolio-data.json` 来自定义：
 
 ```json
 {
@@ -72,7 +72,7 @@
 }
 ```
 
-详细配置说明请查看 [src/data/README.md](src/data/README.md)
+详细配置说明请查看 [public/data/README.md](public/data/README.md)
 
 ### 配置项包括
 
@@ -97,21 +97,22 @@
 
 ```
 my-home-page/
+├── public/                 # 静态资源目录
+│   └── data/              # 数据配置
+│       ├── portfolio-data.example.json  # 示例配置
+│       ├── portfolio-data.json          # 你的配置（不会被提交）
+│       └── README.md                    # 配置说明
 ├── src/
-│   ├── components/          # 组件目录
-│   │   ├── home/           # 首页组件
-│   │   ├── about/          # 关于页面
-│   │   ├── projects/       # 项目展示
-│   │   └── notes/          # 笔记功能
-│   ├── services/           # 服务层
-│   │   └── data.service.ts # 数据服务
-│   ├── data/               # 数据配置
-│   │   ├── portfolio-data.example.json  # 示例配置
-│   │   └── portfolio-data.json          # 你的配置（不会被提交）
-│   └── app.component.ts    # 根组件
-├── index.html              # HTML 入口
-├── package.json            # 依赖配置
-└── README.md               # 项目说明
+│   ├── components/        # 组件目录
+│   │   ├── home/         # 首页组件
+│   │   ├── about/        # 关于页面
+│   │   ├── projects/     # 项目展示
+│   │   └── notes/        # 笔记功能
+│   ├── data.service.ts   # 数据服务
+│   └── app.component.ts  # 根组件
+├── index.html            # HTML 入口
+├── package.json          # 依赖配置
+└── README.md             # 项目说明
 ```
 
 ### 核心特性
@@ -159,7 +160,7 @@ npm run preview
 
 ### 添加新项目
 
-编辑 `src/data/portfolio-data.json`，在 `projects` 数组中添加：
+编辑 `public/data/portfolio-data.json`，在 `projects` 数组中添加：
 
 ```json
 {
@@ -200,7 +201,7 @@ MIT
 
 - [Angular 文档](https://angular.dev)
 - [TailwindCSS 文档](https://tailwindcss.com)
-- [配置说明](src/data/README.md)
+- [配置说明](public/data/README.md)
 
 ---
 

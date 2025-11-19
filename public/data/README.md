@@ -8,7 +8,7 @@
 
 1. 复制示例文件创建你的配置：
    ```bash
-   cp src/data/portfolio-data.example.json src/data/portfolio-data.json
+   cp public/data/portfolio-data.example.json public/data/portfolio-data.json
    ```
 
 2. 编辑 `portfolio-data.json` 文件，填入你自己的信息
@@ -137,4 +137,4 @@
 - 不会。`portfolio-data.json` 已经被添加到 `.gitignore`，只有示例文件会被提交
 
 **Q: 如何恢复默认配置？**
-- 重新复制示例文件：`cp src/data/portfolio-data.example.json src/data/portfolio-data.json`
+- 重新复制示例文件：`cp public/data/portfolio-data.example.json public/data/portfolio-data.json`

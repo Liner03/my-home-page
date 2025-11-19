@@ -1,7 +1,7 @@
 
 import { Component, ChangeDetectionStrategy, signal, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DataService, type AboutData } from '../../services/data.service';
+import { DataService, type AboutData } from '../../data.service';
 
 @Component({
   selector: 'app-about',
