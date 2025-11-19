@@ -12,6 +12,7 @@ import { DataService, type Project } from '../../data.service';
 export class ProjectsComponent {
   selectedProject = signal<Project | null>(null);
   projects = signal<Project[]>([]);
+  isClosingModal = signal(false);
 
   constructor(private dataService: DataService) {
     effect(() => {
@@ -23,10 +24,16 @@ export class ProjectsComponent {
   }
 
   selectProject(project: Project) {
+    this.isClosingModal.set(false);
     this.selectedProject.set(project);
   }
 
   closeModal() {
-    this.selectedProject.set(null);
+    this.isClosingModal.set(true);
+    // Wait for animation to complete before clearing the project
+    setTimeout(() => {
+      this.selectedProject.set(null);
+      this.isClosingModal.set(false);
+    }, 300); // Match the animation duration
   }
 }

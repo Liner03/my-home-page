@@ -122,6 +122,65 @@
     .indicator-pill {
       transition: transform 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55), width 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55);
     }
+
+    /* Modal Animations */
+    @keyframes modal-backdrop-in {
+      from {
+        opacity: 0;
+        backdrop-filter: blur(0px);
+      }
+      to {
+        opacity: 1;
+        backdrop-filter: blur(4px);
+      }
+    }
+    @keyframes modal-backdrop-out {
+      from {
+        opacity: 1;
+        backdrop-filter: blur(4px);
+      }
+      to {
+        opacity: 0;
+        backdrop-filter: blur(0px);
+      }
+    }
+    @keyframes modal-content-in {
+      from {
+        opacity: 0;
+        transform: scale(0.85) translateY(30px);
+        filter: blur(8px);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+        filter: blur(0);
+      }
+    }
+    @keyframes modal-content-out {
+      from {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+        filter: blur(0);
+      }
+      to {
+        opacity: 0;
+        transform: scale(0.9) translateY(20px);
+        filter: blur(5px);
+      }
+    }
+
+    .modal-backdrop-in {
+      animation: modal-backdrop-in 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    .modal-backdrop-out {
+      animation: modal-backdrop-out 0.25s cubic-bezier(0.7, 0, 0.84, 0) forwards;
+    }
+    .modal-content-in {
+      animation: modal-content-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    .modal-content-out {
+      animation: modal-content-out 0.3s cubic-bezier(0.7, 0, 0.84, 0) forwards;
+    }
   </style>
 <script type="importmap">
 {

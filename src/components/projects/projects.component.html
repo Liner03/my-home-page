@@ -17,8 +17,16 @@
   </div>
 
   @if (selectedProject(); as project) {
-    <div class="absolute inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm" (click)="closeModal()">
-      <div class="glass-card w-full max-w-3xl rounded-2xl p-8 border-indigo-400/50 shadow-2xl shadow-indigo-500/30 relative module-container" (click)="$event.stopPropagation()">
+    <div
+      class="absolute inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
+      [class.modal-backdrop-in]="!isClosingModal()"
+      [class.modal-backdrop-out]="isClosingModal()"
+      (click)="closeModal()">
+      <div
+        class="glass-card w-full max-w-3xl rounded-2xl p-8 border-indigo-400/50 shadow-2xl shadow-indigo-500/30 relative module-container"
+        [class.modal-content-in]="!isClosingModal()"
+        [class.modal-content-out]="isClosingModal()"
+        (click)="$event.stopPropagation()">
         <button (click)="closeModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors">
           <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
         </button>
