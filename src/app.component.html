@@ -34,7 +34,7 @@
     <div class="w-full max-w-5xl h-[85vh] max-h-[900px]">
       @switch (renderedView()) {
         @case ('about') { <app-about /> }
-        @case ('projects') { <app-projects /> }
+        @case ('websites') { <app-websites /> }
         @case ('notes') { <app-notes /> }
       }
     </div>
@@ -50,7 +50,7 @@
               [class.hover:bg-white/15]="activeView() !== item.id"
               [class.text-gray-400]="activeView() !== item.id"
               [class.bg-white/20]="activeView() === item.id"
-              [class.neon-glow]="(item.id === 'projects' && activeView() === 'home') || activeView() === item.id">
+              [class.neon-glow]="(item.id === 'websites' && activeView() === 'home') || activeView() === item.id">
         <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" [attr.d]="item.icon" />
         </svg>

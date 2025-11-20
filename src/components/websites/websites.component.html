@@ -1,0 +1,39 @@
+<div class="glass-card w-full h-full rounded-2xl p-8 overflow-y-auto hide-scrollbar">
+  <h2 class="text-3xl font-bold mb-6 text-glow">My Websites</h2>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    @for (website of websites(); track website.url) {
+      <div
+        (click)="openWebsite(website.url)"
+        class="glass-card border border-white/10 rounded-xl p-6 transition-all duration-300 hover:scale-105 hover:border-indigo-400/50 hover:shadow-lg hover:shadow-indigo-500/20 cursor-pointer group">
+
+        @if (website.icon) {
+          <div class="mb-4 text-4xl">{{ website.icon }}</div>
+        }
+
+        <h3 class="text-xl font-bold text-glow mb-2 group-hover:text-indigo-300 transition-colors">
+          {{ website.title }}
+        </h3>
+
+        <p class="text-gray-400 text-sm mb-4 line-clamp-2">
+          {{ website.description }}
+        </p>
+
+        @if (website.tags && website.tags.length > 0) {
+          <div class="flex flex-wrap gap-2">
+            @for (tag of website.tags; track tag) {
+              <span class="px-2 py-1 bg-white/10 text-xs rounded">{{ tag }}</span>
+            }
+          </div>
+        }
+
+        <div class="mt-4 flex items-center text-indigo-400 text-sm group-hover:translate-x-1 transition-transform">
+          <span>Visit site</span>
+          <svg class="w-4 h-4 ml-1" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+          </svg>
+        </div>
+      </div>
+    }
+  </div>
+</div>

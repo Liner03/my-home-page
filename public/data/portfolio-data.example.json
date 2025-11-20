@@ -1,0 +1,74 @@
+{
+  "home": {
+    "name": "Creator Name",
+    "avatarUrl": "https://picsum.photos/seed/ai-os/128",
+    "socialLinks": {
+      "github": "#",
+      "website": "#",
+      "email": "mailto:#"
+    }
+  },
+  "about": {
+    "name": "Creator Name",
+    "avatarUrl": "https://picsum.photos/seed/ai-os/192",
+    "title": "Full-Stack Developer / Interaction Designer / AI Enthusiast",
+    "description": "Passionate about crafting beautiful and intelligent digital experiences. I thrive at the intersection of robust engineering and thoughtful design, with a deep interest in leveraging AI to build smarter, more intuitive applications.",
+    "githubUsername": "yourusername",
+    "skills": [
+      "Full-Stack Development",
+      "Interactive Design",
+      "AI Integration",
+      "Automation Workflows",
+      "UI/UX Aesthetics",
+      "Cloud Architecture"
+    ]
+  },
+  "websites": [
+    {
+      "title": "Personal Blog",
+      "description": "Technical blog sharing insights on web development, AI, and software engineering practices.",
+      "url": "https://example-blog.com",
+      "icon": "✍️",
+      "tags": ["Blog", "Tech", "Articles"]
+    },
+    {
+      "title": "GitHub Profile",
+      "description": "Open source projects and code contributions showcasing full-stack development skills.",
+      "url": "https://github.com/yourusername",
+      "icon": "💻",
+      "tags": ["Code", "Open Source", "Projects"]
+    },
+    {
+      "title": "Design Portfolio",
+      "description": "UI/UX design showcase featuring interactive prototypes and visual design work.",
+      "url": "https://example-design.com",
+      "icon": "🎨",
+      "tags": ["Design", "UI/UX", "Portfolio"]
+    },
+    {
+      "title": "LinkedIn",
+      "description": "Professional network profile with career history and industry connections.",
+      "url": "https://linkedin.com/in/yourusername",
+      "icon": "💼",
+      "tags": ["Professional", "Networking", "Career"]
+    },
+    {
+      "title": "YouTube Channel",
+      "description": "Educational videos on programming tutorials and tech reviews.",
+      "url": "https://youtube.com/@yourchannel",
+      "icon": "📹",
+      "tags": ["Video", "Tutorials", "Education"]
+    },
+    {
+      "title": "Photography Gallery",
+      "description": "Personal photography collection featuring landscape and urban photography.",
+      "url": "https://example-photos.com",
+      "icon": "📸",
+      "tags": ["Photography", "Art", "Gallery"]
+    }
+  ],
+  "rss": {
+    "feedUrl": "https://example.com/feed.xml",
+    "corsProxy": "https://api.allorigins.win/raw?url="
+  }
+}

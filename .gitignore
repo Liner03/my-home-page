@@ -11,6 +11,10 @@ node_modules
 dist
 dist-ssr
 *.local
+.angular
+
+# User data (use portfolio-data.example.json as template)
+public/data/portfolio-data.json
 
 # Editor directories and files
 .vscode/*

@@ -1,39 +1,64 @@
 
-import { Component, ChangeDetectionStrategy, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, ChangeDetectionStrategy, signal, effect, computed } from '@angular/core';
+import { CommonModule, DatePipe } from '@angular/common';
+import { DataService, type NoteCategory, type Note } from '../../data.service';
+import { RssService } from '../../rss.service';
 
-type NoteCategory = 'todo' | 'learning' | 'inspiration' | 'project' | 'secure';
-
-interface NoteItem {
-  id: number;
-  content: string;
-  category: NoteCategory;
-  timestamp: string;
+interface CategoryInfo {
+  id: NoteCategory;
+  label: string;
 }
 
 @Component({
   selector: 'app-notes',
   templateUrl: './notes.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule],
+  imports: [CommonModule, DatePipe],
 })
 export class NotesComponent {
-  activeCategory = signal<NoteCategory>('inspiration');
+  activeCategory = signal<NoteCategory>('');
 
-  notes: NoteItem[] = [
-    { id: 1, content: 'Research state management in zoneless Angular applications for Project Nebula.', category: 'todo', timestamp: '2 hours ago' },
-    { id: 2, content: 'Explore using CSS custom properties for more dynamic themeing.', category: 'learning', timestamp: '1 day ago' },
-    { id: 3, content: 'The concept of "digital gardens" could be a great metaphor for a personal knowledge base.', category: 'inspiration', timestamp: '3 days ago' },
-    { id: 4, content: 'Implement a particle animation for the timeline entry sequence in the portfolio.', category: 'project', timestamp: '5 hours ago' },
-    { id: 5, content: 'API_KEY for personal weather station project: ******************', category: 'secure', timestamp: '1 week ago' },
-    { id: 6, content: 'A futuristic OS portfolio should feel responsive and alive, not static.', category: 'inspiration', timestamp: '2 days ago' },
-  ];
-  
-  get filteredNotes() {
-    return this.notes.filter(note => note.category === this.activeCategory());
+  // Get notes from RSS service
+  notes = this.rssService.getNotes();
+  loading = this.rssService.isLoading();
+  error = this.rssService.getError();
+
+  constructor(
+    private dataService: DataService,
+    private rssService: RssService
+  ) {
+    effect(() => {
+      const rssNotes = this.notes();
+      if (rssNotes.length > 0) {
+        // Set initial category to first available category
+        const uniqueCategories = this.getUniqueCategories(rssNotes);
+        if (uniqueCategories.length > 0 && !uniqueCategories.includes(this.activeCategory())) {
+          this.activeCategory.set(uniqueCategories[0]);
+        }
+      }
+    });
   }
+
+  // Get unique categories from notes data
+  categories = computed(() => {
+    const uniqueCategories = this.getUniqueCategories(this.notes());
+    return uniqueCategories.map(cat => ({
+      id: cat,
+      label: cat  // Use original category name from RSS feed
+    }));
+  });
+
+  filteredNotes = computed(() => {
+    return this.notes().filter(note => note.category === this.activeCategory());
+  });
 
   setCategory(category: NoteCategory) {
     this.activeCategory.set(category);
+  }
+
+  private getUniqueCategories(notes: Note[]): NoteCategory[] {
+    const categoriesSet = new Set<NoteCategory>();
+    notes.forEach(note => categoriesSet.add(note.category));
+    return Array.from(categoriesSet).sort();
   }
 }
