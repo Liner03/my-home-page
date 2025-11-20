@@ -6,6 +6,22 @@
 
 一个现代化、未来感十足的个人作品集网站，采用 Angular 20.3.0 和最新的前端技术构建。
 
+样式预览: [My HomePage](https://www.lin03.cn)
+
+## 展示图
+**Home:**
+<img width="2776" height="1726" alt="image" src="https://github.com/user-attachments/assets/55320ad9-80cb-4d21-bc32-89c6592332d0" />
+
+**About:**
+<img width="2776" height="1722" alt="image" src="https://github.com/user-attachments/assets/9ae36561-cab0-4ecc-8ccb-7cb7e67cd7c3" />
+
+**Website:**
+<img width="2764" height="1718" alt="image" src="https://github.com/user-attachments/assets/1a5337b9-a88d-488e-9b41-b37cb67b06ab" />
+
+**Note:**
+<img width="2776" height="1724" alt="image" src="https://github.com/user-attachments/assets/93a12a4c-971e-4296-8dd6-c527c853d26e" />
+
+
 ## ✨ 特性
 
 - 🎨 **未来主义设计** - 玻璃态效果 + 霓虹美学
