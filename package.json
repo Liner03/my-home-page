@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "ng serve",
     "build": "ng build",
-    "preview": "ng serve --configuration=production"
+    "preview": "ng serve --configuration=production",
+    "generate-rss": "node scripts/generate-rss.js",
+    "prebuild": "npm run generate-rss"
   },
   "dependencies": {
     "rxjs": "^7.8.2",

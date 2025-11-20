@@ -33,9 +33,12 @@ export type NoteCategory = 'todo' | 'learning' | 'inspiration' | 'project' | 'se
 
 export interface Note {
   id: number;
+  title: string;
+  description: string;
   content: string;
   category: NoteCategory;
   timestamp: string;
+  url?: string;
 }
 
 export interface PortfolioData {

@@ -96,23 +96,43 @@
 
 #### 4. notes (笔记列表)
 
-笔记数组，每个笔记包含：
+笔记/文章数组，每个笔记包含：
 
 ```json
 {
   "id": 1,
-  "content": "笔记内容",
+  "title": "文章标题",
+  "description": "文章简短描述（用于RSS feed和预览）",
+  "content": "文章完整内容",
   "category": "inspiration",
-  "timestamp": "2 hours ago"
+  "timestamp": "2025-01-15T10:30:00Z",
+  "url": "https://example.com/article"
 }
 ```
+
+**字段说明：**
+- `id` - 唯一标识符（数字）
+- `title` - 笔记/文章标题
+- `description` - 简短描述，在列表中显示
+- `content` - 完整内容
+- `category` - 分类（见下方）
+- `timestamp` - ISO 8601 格式时间戳
+- `url` - 可选，外部文章链接
 
 **支持的分类 (category)：**
 - `todo` - 待办事项
 - `learning` - 学习笔记
 - `inspiration` - 灵感想法
 - `project` - 项目笔记
-- `secure` - 安全/敏感信息（会显示模糊效果）
+- `secure` - 安全/敏感信息（会显示模糊效果，不会包含在RSS中）
+
+**RSS 订阅功能：**
+- Notes 页面支持 RSS 订阅
+- RSS feed 会自动从 notes 数据生成
+- 访问 `/feed.xml` 获取 RSS feed
+- `secure` 类别的笔记不会包含在 RSS 中
+- 运行 `npm run generate-rss` 手动生成 RSS feed
+- 构建时会自动生成 RSS feed（通过 `prebuild` 脚本）
 
 ## 如何修改
 
