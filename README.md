@@ -14,7 +14,7 @@
 - 📱 **响应式设计** - 完美适配各种设备
 - 🎯 **数据驱动** - 所有内容通过 JSON 配置
 - 🔧 **易于定制** - 无需修改代码，只需编辑配置文件
-- 📡 **RSS 订阅** - 动态生成的 RSS feed 支持
+- 📡 **RSS 订阅** - 支持从远程 RSS feed 读取内容
 
 ## 🚀 快速开始
 
@@ -27,7 +27,7 @@
 
 1. 克隆项目：
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/Liner03/my-home-page.git
    cd my-home-page
    ```
 
@@ -47,18 +47,17 @@
    npm run dev
    ```
 
-5. 在浏览器中打开 http://localhost:4200
+5. 在浏览器中打开 http://localhost:3000
 
-### 生产环境运行
+### 生产构建
 
-如需运行带有动态 RSS feed 的完整功能服务器：
+构建生产版本：
 
 ```bash
 npm run build
-npm start
 ```
 
-服务器将在 http://localhost:4200 启动，RSS feed 可通过 http://localhost:4200/feed.xml 访问。
+构建产物将输出到 `./dist` 目录。
 
 ## 📝 配置你的作品集
 
@@ -106,7 +105,6 @@ npm start
 - **构建工具**: Vite 6.2.0 + Angular CLI
 - **状态管理**: Angular Signals
 - **响应式**: RxJS 7.8.2
-- **服务端**: Express.js 4.18+ (用于动态 RSS)
 
 ### 目录结构
 
@@ -124,10 +122,8 @@ my-home-page/
 │   │   ├── websites/     # 网站链接展示
 │   │   └── notes/        # 笔记/文章功能
 │   ├── data.service.ts   # 数据服务
+│   ├── rss.service.ts    # RSS 读取服务
 │   └── app.component.ts  # 根组件
-├── scripts/              # 工具脚本
-│   └── generate-rss.js  # RSS 生成脚本
-├── server.js            # Express 服务器（动态 RSS）
 ├── index.html           # HTML 入口
 ├── package.json         # 依赖配置
 └── README.md            # 项目说明
@@ -149,7 +145,7 @@ my-home-page/
 npm run dev
 ```
 
-开发服务器将在 http://localhost:4200 启动（仅前端，不包含 RSS 功能）。
+开发服务器将在 http://localhost:3000 启动。
 
 ### 生产构建
 
@@ -159,36 +155,13 @@ npm run build
 
 构建产物将输出到 `./dist` 目录。
 
-### 生产服务器
-
-启动完整功能服务器（包含动态 RSS）：
+### 预览生产版本
 
 ```bash
-npm run serve
+npm run preview
 ```
 
-或分步执行：
-
-```bash
-npm run build
-npm start
-```
-
-服务器将在 http://localhost:4200 启动。
-
-### 环境变量
-
-可以通过环境变量配置服务器：
-
-```bash
-PORT=3000 SITE_URL=https://yoursite.com npm start
-```
-
-- `PORT`: 服务器端口（默认 4200）
-- `SITE_URL`: 网站 URL（用于 RSS feed）
-- `SITE_TITLE`: RSS feed 标题
-- `SITE_DESCRIPTION`: RSS feed 描述
-- `AUTHOR_EMAIL`: RSS feed 作者邮箱
+预览服务器将在 http://localhost:3000 启动。
 
 ## 🎨 自定义样式
 
@@ -244,7 +217,18 @@ PORT=3000 SITE_URL=https://yoursite.com npm start
 
 ### RSS 订阅
 
-访问 `/feed.xml` 获取 RSS feed。RSS feed 会实时从数据文件生成，包含所有非 `secure` 类别的笔记，并按分类组织。
+项目支持从远程 RSS feed URL 读取内容并展示在 Notes 页面。你可以在 `public/data/portfolio-data.json` 中配置 RSS feed URL：
+
+```json
+{
+  "rss": {
+    "feedUrl": "你的RSS feed URL",
+    "corsProxy": "CORS代理URL（可选）"
+  }
+}
+```
+
+RSS 内容会自动解析并按分类展示，支持多分类标签。
 
 ## 📄 许可证
 
