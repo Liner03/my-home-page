@@ -29,11 +29,8 @@
       <button
         (click)="setCategory(category.id)"
         class="px-4 py-2 text-sm rounded-full transition-all"
-        [class.bg-purple-500]="activeCategory() === category.id && category.id === 'inspiration'"
-        [class.bg-sky-500]="activeCategory() === category.id && category.id === 'todo'"
-        [class.bg-yellow-500]="activeCategory() === category.id && category.id === 'learning'"
-        [class.bg-blue-500]="activeCategory() === category.id && category.id === 'project'"
-        [class.bg-red-500]="activeCategory() === category.id && category.id === 'secure'"
+        [class.bg-indigo-500]="activeCategory() === category.id"
+        [class.text-white]="activeCategory() === category.id"
         [class.bg-white/10]="activeCategory() !== category.id"
         [class.hover:bg-white/15]="activeCategory() !== category.id">
         {{ category.label }}

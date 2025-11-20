@@ -29,7 +29,8 @@ export interface Website {
   tags?: string[];
 }
 
-export type NoteCategory = 'todo' | 'learning' | 'inspiration' | 'project' | 'secure';
+// Allow any string as category to support dynamic RSS categories
+export type NoteCategory = string;
 
 export interface Note {
   id: number;

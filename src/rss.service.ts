@@ -49,29 +49,46 @@ export class RssService {
 
       const items = xmlDoc.querySelectorAll('item');
       const parsedNotes: Note[] = [];
+      let noteId = 1;
 
-      items.forEach((item, index) => {
+      items.forEach((item) => {
         const title = item.querySelector('title')?.textContent || '';
         const description = item.querySelector('description')?.textContent || '';
         const link = item.querySelector('link')?.textContent || '';
         const pubDate = item.querySelector('pubDate')?.textContent || new Date().toISOString();
-        const categoryText = item.querySelector('category')?.textContent || 'learning';
 
         // Get content:encoded if available, otherwise use description
         const contentEncoded = item.querySelector('encoded')?.textContent;
         const content = contentEncoded || description;
 
-        // Map category to valid NoteCategory
-        const category = this.mapCategory(categoryText);
+        // Get ALL category tags for this item
+        const categoryElements = item.querySelectorAll('category');
+        const categories: string[] = [];
 
-        parsedNotes.push({
-          id: index + 1,
-          title,
-          description,
-          content,
-          category,
-          timestamp: new Date(pubDate).toISOString(),
-          url: link || undefined
+        categoryElements.forEach(catElement => {
+          const catText = catElement.textContent?.trim();
+          if (catText) {
+            categories.push(catText);
+          }
+        });
+
+        // If no categories found, use a default
+        if (categories.length === 0) {
+          categories.push('未分类');
+        }
+
+        // Create a note for each category
+        // This allows articles with multiple categories to appear in each category view
+        categories.forEach(category => {
+          parsedNotes.push({
+            id: noteId++,
+            title,
+            description,
+            content,
+            category,
+            timestamp: new Date(pubDate).toISOString(),
+            url: link || undefined
+          });
         });
       });
 
@@ -86,21 +103,6 @@ export class RssService {
       console.error('RSS fetch error:', err);
       return [];
     }
-  }
-
-  /**
-   * Maps RSS category to valid NoteCategory
-   */
-  private mapCategory(category: string): NoteCategory {
-    const normalized = category.toLowerCase().trim();
-    const validCategories: NoteCategory[] = ['todo', 'learning', 'inspiration', 'project', 'secure'];
-
-    if (validCategories.includes(normalized as NoteCategory)) {
-      return normalized as NoteCategory;
-    }
-
-    // Default to 'learning' if category is not recognized
-    return 'learning';
   }
 
   /**

@@ -141,8 +141,9 @@ Notes 页面不需要手动配置文章列表，而是从远程 RSS feed 自动�
 **功能说明：**
 - 当点击导航栏的 Notes 按钮时，自动从配置的 RSS feed URL 获取文章
 - RSS feed 应遵循 RSS 2.0 标准格式
-- 支持的文章分类（category）：`todo`、`learning`、`inspiration`、`project`、`secure`
-- 分类按钮会根据 RSS feed 中的分类自动生成并去重
+- **支持任意分类名称**：分类按钮会根据 RSS feed 中的实际分类自动生成
+- **多分类支持**：如果一篇文章有多个 `<category>` 标签，该文章会在每个分类下都显示
+- 分类名称保持原样（支持中文、英文等任意文本）
 - 显示加载状态和错误提示
 - 无需后端服务器或构建时处理，完全在运行时动态获取
 
@@ -153,7 +154,7 @@ Notes 页面不需要手动配置文章列表，而是从远程 RSS feed 自动�
 - `<description>` - 文章简短描述
 - `<link>` - 文章链接（可选）
 - `<pubDate>` - 发布日期（RFC 822 格式）
-- `<category>` - 文章分类（todo/learning/inspiration/project/secure）
+- `<category>` - 文章分类（支持任意文本，可以有多个 category 标签）
 - `<content:encoded>` - 文章完整内容（可选，使用 CDATA）
 
 示例 RSS feed 结构：
@@ -165,16 +166,31 @@ Notes 页面不需要手动配置文章列表，而是从远程 RSS feed 自动�
     <description>My articles and notes</description>
     <link>https://example.com</link>
     <item>
-      <title>Article Title</title>
-      <description>Short description</description>
-      <link>https://example.com/article</link>
+      <title>Vue3实现瀑布流</title>
+      <description>介绍如何在 Vue3 中实现瀑布流布局</description>
+      <link>https://example.com/vue-waterfall</link>
       <pubDate>Mon, 15 Jan 2025 10:30:00 GMT</pubDate>
-      <category>learning</category>
+      <category><![CDATA[学习]]></category>
+      <category><![CDATA[Vue]]></category>
+      <content:encoded><![CDATA[Full article content here]]></content:encoded>
+    </item>
+    <item>
+      <title>MySQL 性能优化</title>
+      <description>MySQL 数据库性能优化实践</description>
+      <link>https://example.com/mysql-optimization</link>
+      <pubDate>Sun, 14 Jan 2025 08:00:00 GMT</pubDate>
+      <category><![CDATA[数据库]]></category>
+      <category><![CDATA[MySQL]]></category>
       <content:encoded><![CDATA[Full article content here]]></content:encoded>
     </item>
   </channel>
 </rss>
 ```
+
+**注意**：
+- 分类名称支持中文、英文等任意文本
+- 一篇文章可以有多个 `<category>` 标签，该文章会在每个分类下显示
+- 如果文章没有 category 标签，会自动归类到"未分类"
 
 ## 如何修改
 

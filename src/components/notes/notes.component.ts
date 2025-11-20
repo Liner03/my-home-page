@@ -9,14 +9,6 @@ interface CategoryInfo {
   label: string;
 }
 
-const CATEGORY_LABELS: Record<NoteCategory, string> = {
-  'inspiration': 'Inspirations',
-  'todo': 'To-Do',
-  'learning': 'Learning',
-  'project': 'Project Notes',
-  'secure': 'Secure'
-};
-
 @Component({
   selector: 'app-notes',
   templateUrl: './notes.component.html',
@@ -24,7 +16,7 @@ const CATEGORY_LABELS: Record<NoteCategory, string> = {
   imports: [CommonModule],
 })
 export class NotesComponent {
-  activeCategory = signal<NoteCategory>('inspiration');
+  activeCategory = signal<NoteCategory>('');
 
   // Get notes from RSS service
   notes = this.rssService.getNotes();
@@ -52,7 +44,7 @@ export class NotesComponent {
     const uniqueCategories = this.getUniqueCategories(this.notes());
     return uniqueCategories.map(cat => ({
       id: cat,
-      label: CATEGORY_LABELS[cat] || cat
+      label: cat  // Use original category name from RSS feed
     }));
   });
 
