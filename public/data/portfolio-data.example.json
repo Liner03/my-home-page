@@ -135,5 +135,11 @@
       "category": "inspiration",
       "timestamp": "2025-01-11T11:00:00Z"
     }
-  ]
+  ],
+  "rss": {
+    "siteUrl": "https://example.com",
+    "siteTitle": "My Portfolio",
+    "siteDescription": "Notes and articles from my portfolio",
+    "authorEmail": "author@example.com"
+  }
 }

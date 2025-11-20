@@ -41,11 +41,19 @@ export interface Note {
   url?: string;
 }
 
+export interface RssConfig {
+  siteUrl: string;
+  siteTitle: string;
+  siteDescription: string;
+  authorEmail: string;
+}
+
 export interface PortfolioData {
   home: HomeData;
   about: AboutData;
   websites: Website[];
   notes: Note[];
+  rss: RssConfig;
 }
 
 @Injectable({
@@ -78,6 +86,10 @@ export class DataService {
 
   getNotes(): Note[] {
     return this.data()?.notes || [];
+  }
+
+  getRssConfig(): RssConfig | null {
+    return this.data()?.rss || null;
   }
 
   getPortfolioData() {

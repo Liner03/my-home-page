@@ -31,7 +31,8 @@
   "home": { ... },      // 首页数据
   "about": { ... },     // 关于页面数据
   "websites": [...],    // 网站链接列表
-  "notes": [...]        // 笔记列表
+  "notes": [...],       // 笔记列表
+  "rss": { ... }        // RSS 配置
 }
 ```
 
@@ -128,12 +129,34 @@
 
 **RSS 订阅功能：**
 - Notes 页面支持 RSS 订阅
-- RSS feed 在运行时动态生成（点击 RSS 按钮时）
-- 前端通过 XHR 请求读取 portfolio-data.json 后实时生成 RSS XML
+- RSS feed 在运行时动态生成（当点击导航栏的 Notes 按钮时）
 - `secure` 类别的笔记不会包含在 RSS 中
 - 分类按钮会根据实际 notes 数据中的分类动态生成并去重
-- 点击 RSS 按钮会自动下载 feed.xml 文件
 - 无需后端服务器或构建时生成
+
+#### 5. rss (RSS 配置)
+
+RSS 订阅源的配置信息：
+
+```json
+{
+  "siteUrl": "https://example.com",
+  "siteTitle": "My Portfolio",
+  "siteDescription": "Notes and articles from my portfolio",
+  "authorEmail": "author@example.com"
+}
+```
+
+**字段说明：**
+- `siteUrl` - 网站的完整 URL（用于生成 RSS feed 中的链接）
+- `siteTitle` - RSS feed 的标题
+- `siteDescription` - RSS feed 的描述
+- `authorEmail` - 作者邮箱地址（用于 RSS feed 的 managingEditor 字段）
+
+**注意：**
+- RSS 配置只需在此文件配置一次，所有相关功能会自动使用这些配置
+- RSS feed 在点击导航栏的 Notes 按钮时自动生成
+- 如果未配置，系统会使用默认值
 
 ## 如何修改
 

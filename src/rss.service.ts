@@ -5,12 +5,17 @@ import { DataService, type Note } from './data.service';
   providedIn: 'root'
 })
 export class RssService {
-  private readonly siteUrl = window.location.origin;
-  private readonly siteTitle = 'My Portfolio';
-  private readonly siteDescription = 'Notes and articles from my portfolio';
-  private readonly authorEmail = 'author@example.com';
-
   constructor(private dataService: DataService) {}
+
+  private getConfig() {
+    const config = this.dataService.getRssConfig();
+    return {
+      siteUrl: config?.siteUrl || window.location.origin,
+      siteTitle: config?.siteTitle || 'My Portfolio',
+      siteDescription: config?.siteDescription || 'Notes and articles from my portfolio',
+      authorEmail: config?.authorEmail || 'author@example.com'
+    };
+  }
 
   /**
    * Escapes XML special characters
@@ -37,6 +42,7 @@ export class RssService {
    * Generates RSS XML content from notes data
    */
   generateRSS(): string {
+    const config = this.getConfig();
     const portfolioData = this.dataService.getPortfolioData()();
     const notes = this.dataService.getNotes();
 
@@ -47,7 +53,7 @@ export class RssService {
     const rssItems = notes
       .filter(note => note.category !== 'secure') // Exclude secure notes from RSS
       .map(note => {
-        const itemUrl = note.url || `${this.siteUrl}/#notes`;
+        const itemUrl = note.url || `${config.siteUrl}/#notes`;
         const pubDate = this.toRFC822Date(note.timestamp);
 
         return `    <item>
@@ -70,13 +76,13 @@ export class RssService {
      xmlns:content="http://purl.org/rss/1.0/modules/content/"
      xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>${this.escapeXml(this.siteTitle)}</title>
-    <description>${this.escapeXml(this.siteDescription)}</description>
-    <link>${this.siteUrl}</link>
+    <title>${this.escapeXml(config.siteTitle)}</title>
+    <description>${this.escapeXml(config.siteDescription)}</description>
+    <link>${config.siteUrl}</link>
     <language>en-us</language>
     <lastBuildDate>${buildDate}</lastBuildDate>
-    <atom:link href="${this.siteUrl}/feed.xml" rel="self" type="application/rss+xml" />
-    ${aboutData?.name ? `<managingEditor>${this.escapeXml(this.authorEmail)} (${this.escapeXml(aboutData.name)})</managingEditor>` : ''}
+    <atom:link href="${config.siteUrl}/feed.xml" rel="self" type="application/rss+xml" />
+    ${aboutData?.name ? `<managingEditor>${this.escapeXml(config.authorEmail)} (${this.escapeXml(aboutData.name)})</managingEditor>` : ''}
 ${rssItems}
   </channel>
 </rss>`;
