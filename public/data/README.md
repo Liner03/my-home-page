@@ -102,12 +102,41 @@ Notes 页面不需要手动配置文章列表，而是从远程 RSS feed 自动�
 
 ```json
 {
-  "feedUrl": "https://example.com/feed.xml"
+  "feedUrl": "https://example.com/feed.xml",
+  "corsProxy": "https://api.allorigins.win/raw?url="
 }
 ```
 
 **字段说明：**
-- `feedUrl` - RSS feed 的完整 URL 地址
+- `feedUrl` - RSS feed 的完整 URL 地址（必填）
+- `corsProxy` - CORS 代理服务的 URL 前缀（可选，用于解决跨域问题）
+
+**关于 CORS 跨域问题：**
+
+由于浏览器的同源策略限制，直接从前端获取第三方 RSS feed 可能会遇到 CORS 跨域错误。解决方案：
+
+1. **使用 CORS 代理**（推荐）：配置 `corsProxy` 字段，使用第三方 CORS 代理服务
+
+   常用的 CORS 代理服务：
+   - `https://api.allorigins.win/raw?url=` - AllOrigins (推荐)
+   - `https://corsproxy.io/?` - CORS Proxy
+
+   示例配置：
+   ```json
+   {
+     "feedUrl": "https://your-blog.com/feed.xml",
+     "corsProxy": "https://api.allorigins.win/raw?url="
+   }
+   ```
+
+2. **RSS feed 支持 CORS**：如果你的 RSS feed 服务器已经配置了 CORS 头，可以不配置 `corsProxy`
+
+   示例配置：
+   ```json
+   {
+     "feedUrl": "https://your-blog.com/feed.xml"
+   }
+   ```
 
 **功能说明：**
 - 当点击导航栏的 Notes 按钮时，自动从配置的 RSS feed URL 获取文章

@@ -68,6 +68,7 @@
     }
   ],
   "rss": {
-    "feedUrl": "https://example.com/feed.xml"
+    "feedUrl": "https://example.com/feed.xml",
+    "corsProxy": "https://api.allorigins.win/raw?url="
   }
 }

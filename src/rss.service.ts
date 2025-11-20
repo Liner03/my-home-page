@@ -26,7 +26,12 @@ export class RssService {
     this.error.set(null);
 
     try {
-      const response = await fetch(config.feedUrl);
+      // Use CORS proxy if configured, otherwise fetch directly
+      const fetchUrl = config.corsProxy
+        ? `${config.corsProxy}${encodeURIComponent(config.feedUrl)}`
+        : config.feedUrl;
+
+      const response = await fetch(fetchUrl);
 
       if (!response.ok) {
         throw new Error(`Failed to fetch RSS feed: ${response.statusText}`);

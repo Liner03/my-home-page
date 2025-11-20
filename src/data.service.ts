@@ -43,6 +43,7 @@ export interface Note {
 
 export interface RssConfig {
   feedUrl: string;
+  corsProxy?: string;  // Optional CORS proxy URL prefix (e.g., 'https://api.allorigins.win/raw?url=')
 }
 
 export interface PortfolioData {
