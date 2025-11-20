@@ -16,9 +16,6 @@ dist-ssr
 # User data (use portfolio-data.example.json as template)
 public/data/portfolio-data.json
 
-# Auto-generated files
-public/feed.xml
-
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

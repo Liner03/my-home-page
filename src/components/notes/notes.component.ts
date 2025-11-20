@@ -3,6 +3,19 @@ import { Component, ChangeDetectionStrategy, signal, effect, computed } from '@a
 import { CommonModule } from '@angular/common';
 import { DataService, type NoteCategory, type Note } from '../../data.service';
 
+interface CategoryInfo {
+  id: NoteCategory;
+  label: string;
+}
+
+const CATEGORY_LABELS: Record<NoteCategory, string> = {
+  'inspiration': 'Inspirations',
+  'todo': 'To-Do',
+  'learning': 'Learning',
+  'project': 'Project Notes',
+  'secure': 'Secure'
+};
+
 @Component({
   selector: 'app-notes',
   templateUrl: './notes.component.html',
@@ -18,9 +31,23 @@ export class NotesComponent {
       const data = this.dataService.getNotes();
       if (data.length > 0) {
         this.notes.set(data);
+        // Set initial category to first available category
+        const uniqueCategories = this.getUniqueCategories(data);
+        if (uniqueCategories.length > 0 && !uniqueCategories.includes(this.activeCategory())) {
+          this.activeCategory.set(uniqueCategories[0]);
+        }
       }
     });
   }
+
+  // Get unique categories from notes data
+  categories = computed(() => {
+    const uniqueCategories = this.getUniqueCategories(this.notes());
+    return uniqueCategories.map(cat => ({
+      id: cat,
+      label: CATEGORY_LABELS[cat] || cat
+    }));
+  });
 
   filteredNotes = computed(() => {
     return this.notes().filter(note => note.category === this.activeCategory());
@@ -28,5 +55,11 @@ export class NotesComponent {
 
   setCategory(category: NoteCategory) {
     this.activeCategory.set(category);
+  }
+
+  private getUniqueCategories(notes: Note[]): NoteCategory[] {
+    const categoriesSet = new Set<NoteCategory>();
+    notes.forEach(note => categoriesSet.add(note.category));
+    return Array.from(categoriesSet).sort();
   }
 }

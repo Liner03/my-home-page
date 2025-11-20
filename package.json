@@ -7,8 +7,8 @@
     "dev": "ng serve",
     "build": "ng build",
     "preview": "ng serve --configuration=production",
-    "generate-rss": "node scripts/generate-rss.js",
-    "prebuild": "npm run generate-rss"
+    "start": "node server.js",
+    "serve": "npm run build && npm start"
   },
   "dependencies": {
     "rxjs": "^7.8.2",
@@ -19,7 +19,8 @@
     "@angular/build": "^20.3.0",
     "@angular/cli": "^20.3.0",
     "@angular/compiler-cli": "^20.3.0",
-    "tailwindcss": "latest"
+    "tailwindcss": "latest",
+    "express": "^4.18.2"
   },
   "devDependencies": {
     "@types/node": "^22.14.0",

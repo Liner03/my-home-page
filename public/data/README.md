@@ -128,11 +128,11 @@
 
 **RSS 订阅功能：**
 - Notes 页面支持 RSS 订阅
-- RSS feed 会自动从 notes 数据生成
+- RSS feed 动态从 notes 数据生成（访问时实时读取）
 - 访问 `/feed.xml` 获取 RSS feed
 - `secure` 类别的笔记不会包含在 RSS 中
-- 运行 `npm run generate-rss` 手动生成 RSS feed
-- 构建时会自动生成 RSS feed（通过 `prebuild` 脚本）
+- 分类按钮会根据实际 notes 数据中的分类动态生成并去重
+- 使用 `npm start` 启动服务器以支持动态 RSS 端点
 
 ## 如何修改
 

@@ -1,24 +1,20 @@
 #!/usr/bin/env node
 
 /**
- * RSS Feed Generator Script
- *
- * This script generates an RSS 2.0 feed from the portfolio notes data.
- * It reads from public/data/portfolio-data.json and generates public/feed.xml
- *
- * Usage:
- *   node scripts/generate-rss.js
+ * Simple Express server to serve the Angular app and dynamic RSS feed
  */
 
-import { readFile, writeFile } from 'fs/promises';
+import express from 'express';
+import { readFile } from 'fs/promises';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-// Configuration
-const SITE_URL = process.env.SITE_URL || 'https://example.com';
+const app = express();
+const PORT = process.env.PORT || 4200;
+const SITE_URL = process.env.SITE_URL || `http://localhost:${PORT}`;
 const SITE_TITLE = process.env.SITE_TITLE || 'My Portfolio';
 const SITE_DESCRIPTION = process.env.SITE_DESCRIPTION || 'Notes and articles from my portfolio';
 const AUTHOR_EMAIL = process.env.AUTHOR_EMAIL || 'author@example.com';
@@ -85,37 +81,36 @@ ${rssItems}
 </rss>`;
 }
 
-/**
- * Main function
- */
-async function main() {
-  try {
-    const dataPath = join(__dirname, '../public/data/portfolio-data.json');
-    const outputPath = join(__dirname, '../public/feed.xml');
+// Serve static files from dist directory
+app.use(express.static(join(__dirname, 'dist/browser')));
 
-    console.log('📖 Reading portfolio data...');
+// Dynamic RSS feed endpoint
+app.get('/feed.xml', async (req, res) => {
+  try {
+    const dataPath = join(__dirname, 'public/data/portfolio-data.json');
     const data = await readFile(dataPath, 'utf-8');
     const portfolioData = JSON.parse(data);
 
     if (!portfolioData.notes || portfolioData.notes.length === 0) {
-      console.warn('⚠️  No notes found in portfolio data');
-      return;
+      return res.status(404).send('No notes found');
     }
-
-    console.log(`📝 Found ${portfolioData.notes.length} notes`);
-    console.log('🔨 Generating RSS feed...');
 
     const rssContent = generateRSS(portfolioData.notes, portfolioData.about);
 
-    await writeFile(outputPath, rssContent, 'utf-8');
-
-    console.log('✅ RSS feed generated successfully!');
-    console.log(`📄 Output: ${outputPath}`);
-    console.log(`🔗 Feed URL: ${SITE_URL}/feed.xml`);
+    res.set('Content-Type', 'application/rss+xml; charset=utf-8');
+    res.send(rssContent);
   } catch (error) {
-    console.error('❌ Error generating RSS feed:', error.message);
-    process.exit(1);
+    console.error('Error generating RSS feed:', error);
+    res.status(500).send('Error generating RSS feed');
   }
-}
+});
 
-main();
+// Fallback to index.html for client-side routing
+app.get('*', (req, res) => {
+  res.sendFile(join(__dirname, 'dist/browser/index.html'));
+});
+
+app.listen(PORT, () => {
+  console.log(`🚀 Server running at http://localhost:${PORT}`);
+  console.log(`📡 RSS feed available at http://localhost:${PORT}/feed.xml`);
+});
