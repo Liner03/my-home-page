@@ -40,8 +40,26 @@ export class NotesComponent {
         if (uniqueCategories.length > 0 && !uniqueCategories.includes(this.activeCategory())) {
           this.activeCategory.set(uniqueCategories[0]);
         }
+
+        // Auto-generate RSS feed when notes are loaded
+        this.generateRSSFeed();
       }
     });
+  }
+
+  private generateRSSFeed(): void {
+    try {
+      const rssContent = this.rssService.generateRSS();
+      const blob = new Blob([rssContent], { type: 'application/rss+xml' });
+      const url = window.URL.createObjectURL(blob);
+
+      // Store the RSS URL for later access
+      (window as any).__rssURL = url;
+
+      console.log('RSS feed generated and available at:', url);
+    } catch (error) {
+      console.error('Error generating RSS feed:', error);
+    }
   }
 
   // Get unique categories from notes data
@@ -65,9 +83,5 @@ export class NotesComponent {
     const categoriesSet = new Set<NoteCategory>();
     notes.forEach(note => categoriesSet.add(note.category));
     return Array.from(categoriesSet).sort();
-  }
-
-  downloadRSS(): void {
-    this.rssService.downloadRSS();
   }
 }
