@@ -6,9 +6,7 @@
   "scripts": {
     "dev": "ng serve",
     "build": "ng build",
-    "preview": "ng serve --configuration=production",
-    "start": "node server.js",
-    "serve": "npm run build && npm start"
+    "preview": "ng serve --configuration=production"
   },
   "dependencies": {
     "rxjs": "^7.8.2",
@@ -19,8 +17,7 @@
     "@angular/build": "^20.3.0",
     "@angular/cli": "^20.3.0",
     "@angular/compiler-cli": "^20.3.0",
-    "tailwindcss": "latest",
-    "express": "^4.18.2"
+    "tailwindcss": "latest"
   },
   "devDependencies": {
     "@types/node": "^22.14.0",

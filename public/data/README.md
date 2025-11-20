@@ -128,11 +128,12 @@
 
 **RSS 订阅功能：**
 - Notes 页面支持 RSS 订阅
-- RSS feed 动态从 notes 数据生成（访问时实时读取）
-- 访问 `/feed.xml` 获取 RSS feed
+- RSS feed 在运行时动态生成（点击 RSS 按钮时）
+- 前端通过 XHR 请求读取 portfolio-data.json 后实时生成 RSS XML
 - `secure` 类别的笔记不会包含在 RSS 中
 - 分类按钮会根据实际 notes 数据中的分类动态生成并去重
-- 使用 `npm start` 启动服务器以支持动态 RSS 端点
+- 点击 RSS 按钮会自动下载 feed.xml 文件
+- 无需后端服务器或构建时生成
 
 ## 如何修改
 

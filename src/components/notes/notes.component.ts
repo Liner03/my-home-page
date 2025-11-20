@@ -2,6 +2,7 @@
 import { Component, ChangeDetectionStrategy, signal, effect, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DataService, type NoteCategory, type Note } from '../../data.service';
+import { RssService } from '../../rss.service';
 
 interface CategoryInfo {
   id: NoteCategory;
@@ -26,7 +27,10 @@ export class NotesComponent {
   activeCategory = signal<NoteCategory>('inspiration');
   notes = signal<Note[]>([]);
 
-  constructor(private dataService: DataService) {
+  constructor(
+    private dataService: DataService,
+    private rssService: RssService
+  ) {
     effect(() => {
       const data = this.dataService.getNotes();
       if (data.length > 0) {
@@ -61,5 +65,9 @@ export class NotesComponent {
     const categoriesSet = new Set<NoteCategory>();
     notes.forEach(note => categoriesSet.add(note.category));
     return Array.from(categoriesSet).sort();
+  }
+
+  downloadRSS(): void {
+    this.rssService.downloadRSS();
   }
 }
