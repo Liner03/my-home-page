@@ -31,7 +31,6 @@
   "home": { ... },      // 首页数据
   "about": { ... },     // 关于页面数据
   "websites": [...],    // 网站链接列表
-  "notes": [...],       // 笔记列表
   "rss": { ... }        // RSS 配置
 }
 ```
@@ -95,68 +94,58 @@
 - `icon` - 可选，用于显示的 emoji 图标
 - `tags` - 可选，网站标签数组
 
-#### 4. notes (笔记列表)
+#### 4. rss (RSS 配置)
 
-笔记/文章数组，每个笔记包含：
+**Notes 页面从 RSS feed 获取内容**
+
+Notes 页面不需要手动配置文章列表，而是从远程 RSS feed 自动获取。只需配置 RSS feed 的 URL：
 
 ```json
 {
-  "id": 1,
-  "title": "文章标题",
-  "description": "文章简短描述（用于RSS feed和预览）",
-  "content": "文章完整内容",
-  "category": "inspiration",
-  "timestamp": "2025-01-15T10:30:00Z",
-  "url": "https://example.com/article"
+  "feedUrl": "https://example.com/feed.xml"
 }
 ```
 
 **字段说明：**
-- `id` - 唯一标识符（数字）
-- `title` - 笔记/文章标题
-- `description` - 简短描述，在列表中显示
-- `content` - 完整内容
-- `category` - 分类（见下方）
-- `timestamp` - ISO 8601 格式时间戳
-- `url` - 可选，外部文章链接
+- `feedUrl` - RSS feed 的完整 URL 地址
 
-**支持的分类 (category)：**
-- `todo` - 待办事项
-- `learning` - 学习笔记
-- `inspiration` - 灵感想法
-- `project` - 项目笔记
-- `secure` - 安全/敏感信息（会显示模糊效果，不会包含在RSS中）
+**功能说明：**
+- 当点击导航栏的 Notes 按钮时，自动从配置的 RSS feed URL 获取文章
+- RSS feed 应遵循 RSS 2.0 标准格式
+- 支持的文章分类（category）：`todo`、`learning`、`inspiration`、`project`、`secure`
+- 分类按钮会根据 RSS feed 中的分类自动生成并去重
+- 显示加载状态和错误提示
+- 无需后端服务器或构建时处理，完全在运行时动态获取
 
-**RSS 订阅功能：**
-- Notes 页面支持 RSS 订阅
-- RSS feed 在运行时动态生成（当点击导航栏的 Notes 按钮时）
-- `secure` 类别的笔记不会包含在 RSS 中
-- 分类按钮会根据实际 notes 数据中的分类动态生成并去重
-- 无需后端服务器或构建时生成
+**RSS feed 格式要求：**
 
-#### 5. rss (RSS 配置)
+您的 RSS feed 应包含以下字段：
+- `<title>` - 文章标题
+- `<description>` - 文章简短描述
+- `<link>` - 文章链接（可选）
+- `<pubDate>` - 发布日期（RFC 822 格式）
+- `<category>` - 文章分类（todo/learning/inspiration/project/secure）
+- `<content:encoded>` - 文章完整内容（可选，使用 CDATA）
 
-RSS 订阅源的配置信息：
-
-```json
-{
-  "siteUrl": "https://example.com",
-  "siteTitle": "My Portfolio",
-  "siteDescription": "Notes and articles from my portfolio",
-  "authorEmail": "author@example.com"
-}
+示例 RSS feed 结构：
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>My Blog</title>
+    <description>My articles and notes</description>
+    <link>https://example.com</link>
+    <item>
+      <title>Article Title</title>
+      <description>Short description</description>
+      <link>https://example.com/article</link>
+      <pubDate>Mon, 15 Jan 2025 10:30:00 GMT</pubDate>
+      <category>learning</category>
+      <content:encoded><![CDATA[Full article content here]]></content:encoded>
+    </item>
+  </channel>
+</rss>
 ```
-
-**字段说明：**
-- `siteUrl` - 网站的完整 URL（用于生成 RSS feed 中的链接）
-- `siteTitle` - RSS feed 的标题
-- `siteDescription` - RSS feed 的描述
-- `authorEmail` - 作者邮箱地址（用于 RSS feed 的 managingEditor 字段）
-
-**注意：**
-- RSS 配置只需在此文件配置一次，所有相关功能会自动使用这些配置
-- RSS feed 在点击导航栏的 Notes 按钮时自动生成
-- 如果未配置，系统会使用默认值
 
 ## 如何修改
 
@@ -170,7 +159,7 @@ RSS 订阅源的配置信息：
 - ✅ 确保 JSON 格式正确（可以使用在线 JSON 验证器检查）
 - ✅ 图片 URL 需要是可访问的完整 URL
 - ✅ 邮箱链接格式：`mailto:your-email@example.com`
-- ✅ 笔记的 `id` 必须是唯一的数字
+- ✅ RSS feed URL 必须是可访问的完整 URL，并返回有效的 RSS 2.0 格式内容
 - ✅ 如果要使用本地图片，建议将图片放在 `public` 文件夹中
 
 ## 图片建议

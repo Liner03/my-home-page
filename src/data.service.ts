@@ -42,17 +42,14 @@ export interface Note {
 }
 
 export interface RssConfig {
-  siteUrl: string;
-  siteTitle: string;
-  siteDescription: string;
-  authorEmail: string;
+  feedUrl: string;
 }
 
 export interface PortfolioData {
   home: HomeData;
   about: AboutData;
   websites: Website[];
-  notes: Note[];
+  notes?: Note[];  // Optional: can be provided or fetched from RSS
   rss: RssConfig;
 }
 

@@ -88,13 +88,11 @@ export class AppComponent {
         setTimeout(() => this.showMarquee.set(false), 1500);
       }
 
-      // Generate RSS feed when navigating to notes page
+      // Fetch RSS feed when navigating to notes page
       if (view === 'notes') {
-        try {
-          this.rssService.generateRSS();
-        } catch (error) {
-          console.error('Failed to generate RSS feed:', error);
-        }
+        this.rssService.fetchRSSFeed().catch(error => {
+          console.error('Failed to fetch RSS feed:', error);
+        });
       }
     }
   }

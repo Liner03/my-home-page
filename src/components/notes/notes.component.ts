@@ -25,18 +25,21 @@ const CATEGORY_LABELS: Record<NoteCategory, string> = {
 })
 export class NotesComponent {
   activeCategory = signal<NoteCategory>('inspiration');
-  notes = signal<Note[]>([]);
+
+  // Get notes from RSS service
+  notes = this.rssService.getNotes();
+  loading = this.rssService.isLoading();
+  error = this.rssService.getError();
 
   constructor(
     private dataService: DataService,
     private rssService: RssService
   ) {
     effect(() => {
-      const data = this.dataService.getNotes();
-      if (data.length > 0) {
-        this.notes.set(data);
+      const rssNotes = this.notes();
+      if (rssNotes.length > 0) {
         // Set initial category to first available category
-        const uniqueCategories = this.getUniqueCategories(data);
+        const uniqueCategories = this.getUniqueCategories(rssNotes);
         if (uniqueCategories.length > 0 && !uniqueCategories.includes(this.activeCategory())) {
           this.activeCategory.set(uniqueCategories[0]);
         }
