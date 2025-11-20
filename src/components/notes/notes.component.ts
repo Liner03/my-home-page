@@ -1,6 +1,6 @@
 
 import { Component, ChangeDetectionStrategy, signal, effect, computed } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { DataService, type NoteCategory, type Note } from '../../data.service';
 import { RssService } from '../../rss.service';
 
@@ -13,7 +13,7 @@ interface CategoryInfo {
   selector: 'app-notes',
   templateUrl: './notes.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule],
+  imports: [CommonModule, DatePipe],
 })
 export class NotesComponent {
   activeCategory = signal<NoteCategory>('');
