@@ -1,0 +1,41 @@
+/* 垂直下落动画 */
+.flake-fall-wrapper {
+  animation-name: fall;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+@keyframes fall {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    /* 落到底部下方，确保完全移出视野 */
+    transform: translateY(120vh);
+  }
+}
+
+/* 水平摇摆动画 */
+.flake-sway-wrapper {
+  animation-name: sway;
+  animation-timing-function: ease-in-out; /* 正弦波般的柔和摆动 */
+  animation-iteration-count: infinite;
+  animation-direction: alternate; /* 左右往复 */
+}
+
+@keyframes sway {
+  from {
+    /* 向左偏移幅度 */
+    transform: translateX(calc(-1 * var(--sway-amplitude)));
+  }
+  to {
+    /* 向右偏移幅度 */
+    transform: translateX(var(--sway-amplitude));
+  }
+}
+
+/* 雪花本体样式 */
+.snowflake {
+  filter: blur(0.6px); /* 柔和边缘 */
+  box-shadow: 0 0 4px rgba(255, 255, 255, 0.3); /* 轻微发光 */
+}

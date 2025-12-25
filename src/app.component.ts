@@ -6,6 +6,7 @@ import { WebsitesComponent } from './components/websites/websites.component';
 import { NotesComponent } from './components/notes/notes.component';
 import { DataService } from './data.service';
 import { RssService } from './rss.service';
+import { SnowEffectComponent } from './components/snow-effect/snow-effect.component';
 
 export type View = 'home' | 'about' | 'websites' | 'notes';
 
@@ -19,6 +20,7 @@ export type View = 'home' | 'about' | 'websites' | 'notes';
     AboutComponent,
     WebsitesComponent,
     NotesComponent,
+    SnowEffectComponent
   ],
 })
 export class AppComponent {

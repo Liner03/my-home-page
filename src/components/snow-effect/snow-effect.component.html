@@ -1,0 +1,24 @@
+<div class="snow-container fixed inset-0 pointer-events-none z-[-1] overflow-hidden">
+  @for (flake of snowflakes(); track flake.id) {
+    <!-- 外层：控制垂直下落 -->
+    <div class="flake-fall-wrapper absolute top-[-10%]"
+         [style.left]="flake.left"
+         [style.animation-duration]="flake.fallDuration"
+         [style.animation-delay]="flake.fallDelay">
+      
+      <!-- 内层：控制水平摇摆 -->
+      <div class="flake-sway-wrapper"
+           [style.--sway-amplitude]="flake.swayAmplitude"
+           [style.animation-duration]="flake.swayDuration"
+           [style.animation-delay]="flake.swayDelay">
+        
+        <!-- 核心：雪花视觉实体 -->
+        <div class="snowflake bg-white rounded-full"
+             [style.width]="flake.size"
+             [style.height]="flake.size"
+             [style.opacity]="flake.opacity">
+        </div>
+      </div>
+    </div>
+  }
+</div>
